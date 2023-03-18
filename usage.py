@@ -51,7 +51,7 @@ num_of_timesteps = 64                   # length of predicted labels (for images
 
 #%% Preprocessing
 
-path = Path("data/rafael")
+path = Path("/data/rafael")
 #path = args.command_line_path
 os.chdir(path)
 train_data = read_labels("written_name_train_v2.csv")

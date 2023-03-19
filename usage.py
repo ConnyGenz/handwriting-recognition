@@ -37,7 +37,7 @@ args = parser.parse_args()
 train_size = 30000
 valid_size = 3000
 test_size = 300
-num_epochs = 100
+num_epochs = 98
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 # character to number

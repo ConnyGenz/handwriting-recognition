@@ -34,10 +34,10 @@ args = parser.parse_args()
 
 #%% Variables
 
-train_size = 5000
+train_size = 1000
 valid_size = 3000
 test_size = 300
-num_epochs = 30
+num_epochs = 10
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 # character to number

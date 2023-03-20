@@ -34,10 +34,10 @@ args = parser.parse_args()
 
 #%% Variables
 
-train_size = 1000
+train_size = 15000
 valid_size = 3000
 test_size = 300
-num_epochs = 10
+num_epochs = 100
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 # character to number
@@ -97,37 +97,29 @@ train_loss(num_of_timesteps, train_size, train_x_new,
 mini_x_for_pred = create_mini_batches(train_x_new, 25)
 mini_y_for_pred = create_mini_batches(train_y, 25)
 
-predictions_list = []
-index = 0
-for kl in range(len(mini_x_for_pred)):
-    train_data_permuted = torch.permute(mini_x_for_pred[index], (0,3,2,1))
-    predictions = cm(train_data_permuted)  #use the CharModel
-    predictions = predictions[:, 2:, :]
-    #permuted_predictions = torch.permute(predictions, (1,0,2))
-    predictions_list.append(predictions)
+train_data_permuted_batch_zero = torch.permute(mini_x_for_pred[0], (0,3,2,1))
+predictions_for_batch_zero = cm(train_data_permuted_batch_zero)  #use the CharModel
 
-    index +=1  
+train_data_permuted_batch_five = torch.permute(mini_x_for_pred[5], (0,3,2,1))
+predictions_for_batch_five = cm(train_data_permuted_batch_five)  #use the CharModel
 
-# Der weitere Code in unserem Projekt (z.B. decode_preds usw.) erwartet die Predictions in Form eines Tensors, wir haben aber jetzt 
-# eine Liste von Tensoren. Also, am besten die Liste wieder in einen großen Tensor umwandeln. Das müsste durch Stacken gehen.
-# Im weiteren Code Name der Variable ändern: > "predictions" >> "tensor_predictions"
 
-tensor_predictions = torch.stack(predictions_list)
-tensor_predictions = tensor_predictions.view(tensor_predictions.size(0)*tensor_predictions.size(1),tensor_predictions.size(2),tensor_predictions.size(3))
-
-encoded = decode_preds(tensor_predictions, train_size, alphabets)
+encoded_zero = decode_preds(predictions_for_batch_zero, train_size, alphabets)
+encoded_five = decode_preds(predictions_for_batch_five, train_size, alphabets)
 # >> result is a list of strings of the form "AAAA°NNN°NNNNNN°AA" (name "Anna", uncleaned)
 
 # >> Derive “Anna” from “"AAAA°NNN°NNNNNN°AA"
-decoded = ctc_decode(encoded)
+decoded_zero = ctc_decode(encoded_zero)
+decoded_five = ctc_decode(encoded_five)
         
 #%% check accuracy of train and on validation set
 # train:
-identity_train = [name for name in train_data["IDENTITY"]]
-accuracy_train = accuracy_name(decoded, identity_train)    #data = decoded train
+#identity_train = [name for name in train_data["IDENTITY"]]
+#accuracy_train = accuracy_name(decoded_zero, identity_train)    #data = decoded train
     
-print("first 100 decoded names: ", decoded[0:100])
-print("accuracy: ", accuracy_train)
+print("decoded names from batch 0: ", decoded_zero[0:24])
+print("decoded names from batch 5: ", decoded_five[0:24])
+# print("accuracy: ", accuracy_train)
 '''
 # validation:
 identity_valid = [name for name in valid_data["IDENTITY"]]

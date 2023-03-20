@@ -104,8 +104,8 @@ train_data_permuted_batch_five = torch.permute(mini_x_for_pred[5], (0,3,2,1))
 predictions_for_batch_five = cm(train_data_permuted_batch_five)  #use the CharModel
 
 
-encoded_zero = decode_preds(predictions_for_batch_zero, train_size, alphabets)
-encoded_five = decode_preds(predictions_for_batch_five, train_size, alphabets)
+encoded_zero = decode_preds(predictions_for_batch_zero, 25, alphabets)
+encoded_five = decode_preds(predictions_for_batch_five, 25, alphabets)
 # >> result is a list of strings of the form "AAAA°NNN°NNNNNN°AA" (name "Anna", uncleaned)
 
 # >> Derive “Anna” from “"AAAA°NNN°NNNNNN°AA"

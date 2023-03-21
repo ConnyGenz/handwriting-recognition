@@ -34,7 +34,7 @@ args = parser.parse_args()
 
 #%% Variables
 
-train_size = 50000
+train_size = 100000
 valid_size = 3000
 test_size = 300
 num_epochs = 100

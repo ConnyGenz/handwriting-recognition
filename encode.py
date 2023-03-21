@@ -8,21 +8,17 @@ import numpy as np
 import torch
 
 
-def max_str(train, train_size, test, test_size, valid, valid_size):
+def max_str(train, train_size):
     # derive the count of letters of the longest name
     liste1 = [train.loc[i,"IDENTITY"] for i in range(train_size)]
-    liste2 = [test.loc[i,"IDENTITY"] for i in range(test_size)]
-    liste3 = [valid.loc[i,"IDENTITY"] for i in range(valid_size)]
-    all_lists = liste1 + liste2 + liste3
+    all_lists = liste1
     longest_name = max(all_lists, key=len)
     return len(longest_name)
         
 
-def min_str(train, train_size, test, test_size, valid, valid_size):
+def min_str(train, train_size):
     liste1 = [train.loc[i,"IDENTITY"] for i in range(train_size)]
-    liste2 = [test.loc[i,"IDENTITY"] for i in range(test_size)]
-    liste3 = [valid.loc[i,"IDENTITY"] for i in range(valid_size)]
-    all_lists = liste1 + liste2 + liste3
+    all_lists = liste1
     longest_name = min(all_lists, key=len)
     return len(longest_name)
 

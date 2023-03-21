@@ -37,7 +37,7 @@ args = parser.parse_args()
 train_size = 100000
 valid_size = 3000
 test_size = 300
-num_epochs = 100
+num_epochs = 60
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 # character to number
@@ -55,19 +55,19 @@ path = Path("/data/rafael")
 #path = args.command_line_path
 os.chdir(path)
 train_data = read_labels("written_name_train_v2.csv")
-valid_data = read_labels("written_name_validation_v2.csv")
-test_data = read_labels("written_name_test_v2.csv")
+# valid_data = read_labels("written_name_validation_v2.csv")
+# test_data = read_labels("written_name_test_v2.csv")
 
 # use encode function from read_data2 file
 train_x_new = encode("train", train_size, train_data, device)#, args)
-valid_x_new = encode("validation", valid_size, valid_data, device)#, args)
+# valid_x_new = encode("validation", valid_size, valid_data, device)#, args)
 
 
 #%% Variables #2
 
-max_str_len = max_str(train_data, train_size,test_data, test_size,valid_data, valid_size)
+max_str_len = max_str(train_data, train_size)
 # Target sequence length of longest target in batch (padding length)
-min_str_len = min_str(train_data, train_size,test_data, test_size,valid_data, valid_size)
+min_str_len = min_str(train_data, train_size)
 # Minimum target length
 
 #%% Encode

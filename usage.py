@@ -140,8 +140,8 @@ list_of_correct_names_test_size = complete_list_of_correct_names[0:test_size-1]
 number_of_correct_names = accuracy_name(decoded_test_predictions, list_of_correct_names_test_size)
 number_of_wrong_characters = accuracy_letters(decoded_test_predictions, list_of_correct_names_test_size) 
 
-print("The number of correct names in the test set of size " + test_size + " is: " + number_of_correct_names)
-print("The number of wrong letters in the total number of " + test_size + " letters is: " + number_of_wrong_characters)
+print("The number of correct names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
+print("The number of wrong letters in the total number of " + str(test_size) + " letters is: " + str(number_of_wrong_characters))
 
 
 '''

@@ -13,7 +13,7 @@ def accuracy_name(decoded_data, identity_train):
     # if none are predicted correctly accuracy=0
     # whole name has to be predicted correctly not just 4 out of 5 letters or so
     correct_count = 0
-    for k in range(len(decoded_data-1)):
+    for k in range(len(decoded_data)-1):
         if decoded_data[k] == identity_train[k]:
             correct_count += 1
     return correct_count / len(identity_train)

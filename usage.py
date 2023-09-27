@@ -21,6 +21,7 @@ from train import train_loss
 from decode import decode_preds
 from decode import ctc_decode
 from evaluation import accuracy_name
+from evaluation import accuracy_letters
 
 #%% not working yet
 '''
@@ -34,10 +35,10 @@ args = parser.parse_args()
 
 #%% Variables
 
-train_size = 150000
-valid_size = 3000
-test_size = 300
-num_epochs = 100
+train_size = 1500
+valid_size = 30
+test_size = 100
+num_epochs = 50
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 # character to number
@@ -56,11 +57,12 @@ path = Path("/data/rafael")
 os.chdir(path)
 train_data = read_labels("written_name_train_v2.csv")
 # valid_data = read_labels("written_name_validation_v2.csv")
-# test_data = read_labels("written_name_test_v2.csv")
+test_data = read_labels("written_name_test_v2.csv")
 
-# use encode function from read_data2 file
-train_x_new = encode("train", train_size, train_data, device)#, args)
-# valid_x_new = encode("validation", valid_size, valid_data, device)#, args)
+# use encode function from "read_data" file
+train_x_new = encode("train", train_size, train_data, device)
+# valid_x_new = encode("validation", valid_size, valid_data, device)
+test_x_new = encode("test", test_size, test_data, device)
 
 
 #%% Variables #2
@@ -74,7 +76,9 @@ min_str_len = min_str(train_data, train_size)
 
 train_y = encode_labels(train_size, train_data, max_str_len, alphabets, device)
 train_y = torch.tensor(train_y, dtype=torch.float32).to(device)
-#print(train_y.size())    
+#print(train_y.size())   
+test_y = encode_labels(test_size, test_data, max_str_len, alphabets, device) 
+test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 
 #%% Model
 cm = CharModel(29).to(device) #29 characters in alphabets
@@ -120,6 +124,26 @@ decoded_five = ctc_decode(encoded_five)
 print("decoded names from batch 0: ", decoded_zero[0:24])
 print("decoded names from batch 5: ", decoded_five[0:24])
 # print("accuracy: ", accuracy_train)
+
+#%% Evaluation
+# Check accuracy on test set
+
+test_data_permuted = torch.permute(test_x_new, (0,3,2,1))
+predictions_for_test_data = cm(test_data_permuted)  #use the CharModel
+encoded_test_predictions = decode_preds(predictions_for_test_data, test_size, alphabets)
+decoded_test_predictions = ctc_decode(encoded_test_predictions)
+
+complete_list_of_correct_names = test_data['IDENTITY'].tolist()
+list_of_correct_names_test_size = complete_list_of_correct_names[0:test_size-1]
+
+
+number_of_correct_names = accuracy_name(decoded_test_predictions, list_of_correct_names_test_size)
+number_of_wrong_characters = accuracy_letters(decoded_test_predictions, list_of_correct_names_test_size) 
+
+print("The number of correct names in the test set of size " + test_size + " is: " + number_of_correct_names)
+print("The number of wrong letters in the total number of " + test_size + " letters is: " + number_of_wrong_characters)
+
+
 '''
 # validation:
 identity_valid = [name for name in valid_data["IDENTITY"]]

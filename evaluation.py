@@ -4,6 +4,10 @@ Created on Mon Sep 26 18:04:07 2022
 
 @author: emibu
 """
+
+from torchmetrics.text import CharErrorRate
+
+
 def accuracy_name(decoded_data, identity_train):    
     # if all names are predicted correctly accuracy=1
     # if none are predicted correctly accuracy=0
@@ -14,5 +18,9 @@ def accuracy_name(decoded_data, identity_train):
             correct_count += 1
     return correct_count / len(identity_train)
 
-# def accuracy_letters    --> upcoming
+
+def accuracy_letters(decoded_data, identity_train):
     # how much of one name is predicted correctly
+    cer = CharErrorRate()
+    cer_value = cer(decoded_data, identity_train)
+    return cer_value

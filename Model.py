@@ -18,10 +18,10 @@ class CharModel(nn.Module):
         # >> for convolutional layer, see documentation: https://pytorch.org/docs/stable/generated/torch.nn.Conv2d.html
         # >> arguments in convolutional layer: input channels, output channels, kernel size, padding
         # input: 1 because we have 1 channel since we converted the images to greyscale
-        # output:128, is arbitrarily chosen
+        # output: for each convolutional layer: 32 ... 64 ... 128, is arbitrarily chosen
         self.conv1 = nn.Conv2d(1,32, kernel_size=(3,3), padding=("same"))  
-        # >> for max pool layer, see documentation: https://pytorch.org/docs/stable/generated/torch.nn.MaxPool2d.html
         self.batch1 = nn.BatchNorm2d(32)
+        # >> for max pool layer, see documentation: https://pytorch.org/docs/stable/generated/torch.nn.MaxPool2d.html
         self.max_pool_1 = nn.MaxPool2d(kernel_size=(2,2))
         
         self.conv2 = nn.Conv2d(32,64, kernel_size=(3,3), padding=("same"))
@@ -39,58 +39,39 @@ class CharModel(nn.Module):
         self.lstm = nn.LSTM(64,256,bidirectional=True,batch_first=True)
         self.lstm2 = nn. LSTM(512,256,bidirectional=True,batch_first=True)
         
-        self.linear = nn.Linear(512, num_chars+1) # +1 ctc blank
+        self.linear = nn.Linear(512, num_chars+1) # +1 for ctc blank
         
         self.soft = nn.LogSoftmax()
                 
 
     def forward(self, images):
         bs, c, h, w = images.size()    #batch size, channels, height and width
-        #print(bs,c,h,w)
+        # print(bs,c,h,w)
         # Apply convolutional layer to data, then apply relu activation function
         x = self.conv1(images)
-        #print(x.size())
+        #print(x.size())  << .... can be added after each layer to check current dimensions of tensor, helps in building the model
         x = self.batch1(x)
-        #print(x.size())
         x = F.relu(x)
-        #print(x.size())
         x = self.max_pool_1(x)
-        #print(x.size())
         
         x = self.conv2(x)
-        #print(x.size())
         x = self.batch2(x)
-        #print(x.size())
         x = F.relu(x)
-        #print(x.size())
         x = self.max_pool_2(x)
-        #print(x.size())
         x = self.drop_l(x)
-        #print(x.size())
         
         x = self.conv3(x)
-        #print(x.size())
         x = self.batch3(x)
-        #print(x.size())
         x = F.relu(x)
-        #print(x.size())
         x = self.max_pool_3(x)
-        #print(x.size())
         x = self.drop_2(x)
-        #print(x.size())
         
         x = x.permute(0,3,2,1)
-        #print(x.size())
         x = x.reshape(bs, x.size(1), -1)
-        #print(x.size())
         x = self.linear_1(x)
-        #print(x.size())
         
-        x, (_,_) = self.lstm(x)#x.view(1,-1,64))
-        #print("lstm: "+str(x.size()))
+        x, (_,_) = self.lstm(x)
         x, (_,_) = self.lstm2(x)
-        #print("lstm2: "+str(x.size()))
         x = self.linear(x)
-        #print(x.size())
         x = self.soft(x)
         return x

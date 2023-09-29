@@ -99,7 +99,7 @@ def save_checkpoint(state, filename="my_checkpoint.pth"):
 
 
 
-checkpoint = {'state_dict': cm.state_dict()}
+checkpoint = cm.state_dict()
 save_under = "my_checkpoint.pth"
 save_checkpoint(checkpoint)
 

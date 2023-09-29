@@ -93,7 +93,7 @@ train_loss(num_of_timesteps, train_size, train_x_new,
 
 # save the trained model to a file
 
-def save_checkpoint(state, filename): 
+def save_checkpoint(state, filename="my_checkpoint.pth"): 
     print("Saving model to file " + str(filename))
     torch.save(state, filename, _use_new_zipfile_serialization=False)
 
@@ -101,7 +101,7 @@ def save_checkpoint(state, filename):
 
 checkpoint = {'state_dict': cm.state_dict()}
 save_under = "my_checkpoint.pth"
-save_checkpoint(checkpoint, save_under)
+save_checkpoint(checkpoint)
 
 #%% Decode model output and take a look at results
 

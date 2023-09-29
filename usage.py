@@ -41,7 +41,7 @@ args = parser.parse_args()
 train_size = 1500
 valid_size = 30
 test_size = 100
-num_epochs = 50
+num_epochs = 20
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 
@@ -100,7 +100,7 @@ def save_checkpoint(state, filename):
 
 
 checkpoint = {'state_dict': cm.state_dict()}
-save_under = "my_checkpoint.pth.tar"
+save_under = "my_checkpoint.pth"
 save_checkpoint(checkpoint, save_under)
 
 #%% Decode model output and take a look at results

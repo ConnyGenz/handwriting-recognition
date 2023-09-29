@@ -95,7 +95,7 @@ train_loss(num_of_timesteps, train_size, train_x_new,
 
 def save_checkpoint(state, filename): 
     print("Saving model to file " + str(filename))
-    torch.save(state, filename)
+    torch.save(state, filename, _use_new_zipfile_serialization=False)
 
 
 

@@ -38,10 +38,10 @@ args = parser.parse_args()
 
 #%% Variables
 
-train_size = 1500
+train_size = 500
 valid_size = 30
 test_size = 100
-num_epochs = 20
+num_epochs = 10
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 
@@ -93,7 +93,7 @@ train_loss(num_of_timesteps, train_size, train_x_new,
 
 # save the trained model to a file
 
-def save_checkpoint(state, filename="my_checkpoint.pth"): 
+def save_checkpoint(state, filename="/my_checkpoint.pth"): 
     print("Saving model to file " + str(filename))
     torch.save(state, filename, _use_new_zipfile_serialization=False)
 

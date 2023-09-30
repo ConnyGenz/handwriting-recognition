@@ -99,10 +99,10 @@ if not train_with_model_from_file:
 if train_with_model_from_file:
 
     print("Loading model from file ...")
-    saved_model = torch.load("/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth")
-    saved_model.train()
+    cm = torch.load("/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth")
+    cm.train()
 
-    train_loss(num_of_timesteps, train_size, train_x_new, max_str_len, train_y, saved_model, num_epochs, train_data, device)
+    train_loss(num_of_timesteps, train_size, train_x_new, max_str_len, train_y, cm, num_epochs, train_data, device)
 
 # Choose whether to save trained model to a file and specify filename and path
 # How to save and load models in Pytorch: https://www.youtube.com/watch?v=g6kQl_EFn84

@@ -105,11 +105,11 @@ train_loss(num_of_timesteps, train_size, train_x_new,
 
 # create a empty text file
 # in current directory
-fp = open('sales.txt', 'x')
+fp = open('/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/sales.txt', 'x')
 fp.close()
 
 # create a empty text file
-fp = open('sales_2.txt', 'w')
+fp = open('/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/sales_2.txt', 'w')
 fp.write('first line')
 fp.close()
 

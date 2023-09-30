@@ -88,10 +88,15 @@ test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 
 # Decide whether to create a model or to use a saved model from a file
 
-work_with_model_from_file = False 
+work_with_model_from_file = True 
 
 if work_with_model_from_file:
-    print("ok")
+    print("Loading model parameters from file")
+    location_of_parameters = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth"
+    cm = CharModel(29)
+    cm.load_state_dict(torch.load(location_of_parameters))
+    cm.eval()
+    cm.to(device)
 
 if not work_with_model_from_file:
     cm = CharModel(29).to(device) #29 characters in alphabets
@@ -119,7 +124,7 @@ if train_with_model_from_file:
 # https://www.youtube.com/watch?v=9L9jEOwRrCg 
 
 save_trained_model = False
-save_model_parameters = True
+save_model_parameters = False
 
 def save_model(model, path_and_filename): 
     print("Saving model to file " + str(path_and_filename))
@@ -133,7 +138,7 @@ if save_trained_model:
 
 if save_model_parameters:
     storage_location = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth"
-    print("Saving complete model to file " + str(storage_location))
+    print("Saving model parameters to file " + str(storage_location))
     torch.save(cm.state_dict(), storage_location)
 
 

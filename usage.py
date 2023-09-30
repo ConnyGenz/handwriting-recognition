@@ -88,30 +88,43 @@ test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 cm = CharModel(29).to(device) #29 characters in alphabets
 
 #%% Training
-train_loss(num_of_timesteps, train_size, train_x_new,
+
+# Choose whether to train model from scratch or whether to continue training with a model saved to a file
+train_with_model_from_file = False
+
+if not train_with_model_from_file:
+    train_loss(num_of_timesteps, train_size, train_x_new,
                max_str_len, train_y, cm, num_epochs, train_data, device)
+    
+if train_with_model_from_file:
+
+    saved_model = torch.load("/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_checkpoint.pt")
+
+    train_loss(num_of_timesteps, train_size, train_x_new,
+               max_str_len, train_y, saved_model, num_epochs, train_data, device)
+
 
 # save the trained model to a file
+# How to save and load models in Pytorch: https://www.youtube.com/watch?v=g6kQl_EFn84
 
-def save_checkpoint(state, filename='/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_checkpoint.pth'): 
+
+def save_checkpoint(model_state, path_and_filename): 
     print("Saving model to file " + str(filename))
-    torch.save(state, filename, _use_new_zipfile_serialization=False)
+    torch.save(model_state, path_and_filename, _use_new_zipfile_serialization=False)
 
+# Choose whether to save trained model to a file and specify filename and path
 
+save_trained_model = True
 
-checkpoint = cm.state_dict()
-save_under = "my_checkpoint.pth"
-save_checkpoint(checkpoint)
+if save_trained_model: 
+    checkpoint = cm.state_dict()
+    save_under = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_checkpoint.pt"
+    save_checkpoint(checkpoint, save_under)
 
-# create a empty text file
-# in current directory
-fp = open('/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/sales.txt', 'x')
-fp.close()
-
-# create a empty text file
-fp = open('/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/sales_2.txt', 'w')
-fp.write('first line')
-fp.close()
+# test for creating files
+#fp = open('/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/sales_2.txt', 'w')
+#fp.write('first line')
+#fp.close()
 
 #%% Decode model output and take a look at results
 
@@ -149,7 +162,7 @@ number_of_correct_names = accuracy_name(decoded_test_predictions, list_of_correc
 number_of_wrong_characters = accuracy_letters(decoded_test_predictions, list_of_correct_names_test_size) 
 
 print("The number of correct names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
-print("The number of wrong letters in the total number of " + str(test_size) + " letters is: " + str(number_of_wrong_characters))
+print("The percentage of wrong letters in the total number of " + str(test_size) + " letters is: " + str(number_of_wrong_characters))
 
 
 '''

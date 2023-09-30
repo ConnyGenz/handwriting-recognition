@@ -90,7 +90,7 @@ cm = CharModel(29).to(device) #29 characters in alphabets
 #%% Training
 
 # Choose whether to train model from scratch or whether to continue training with a model saved to a file
-train_with_model_from_file = False
+train_with_model_from_file = True
 
 if not train_with_model_from_file:
     train_loss(num_of_timesteps, train_size, train_x_new,
@@ -98,23 +98,20 @@ if not train_with_model_from_file:
     
 if train_with_model_from_file:
 
+    print("Loading model from file")
     saved_model = torch.load("/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_checkpoint.pth")
 
     train_loss(num_of_timesteps, train_size, train_x_new,
                max_str_len, train_y, saved_model, num_epochs, train_data, device)
 
-
-# save the trained model to a file
+# Choose whether to save trained model to a file and specify filename and path
 # How to save and load models in Pytorch: https://www.youtube.com/watch?v=g6kQl_EFn84
 
+save_trained_model = False
 
 def save_checkpoint(model_state, path_and_filename): 
     print("Saving model to file " + str(path_and_filename))
     torch.save(model_state, path_and_filename, _use_new_zipfile_serialization=False)
-
-# Choose whether to save trained model to a file and specify filename and path
-
-save_trained_model = True
 
 if save_trained_model: 
     checkpoint = cm.state_dict()

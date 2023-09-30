@@ -105,9 +105,10 @@ if not work_with_model_from_file:
 #%% Training
 
 # Choose whether to train model from scratch or whether to continue training with a model saved to a file
+do_train = False
 train_with_model_from_file = False
 
-if not train_with_model_from_file:
+if do_train:
     train_loss(num_of_timesteps, train_size, train_x_new,
                max_str_len, train_y, cm, num_epochs, train_data, device)
     

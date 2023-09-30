@@ -107,7 +107,7 @@ if train_with_model_from_file:
 # Choose whether to save trained model to a file and specify filename and path
 # How to save and load models in Pytorch: https://www.youtube.com/watch?v=g6kQl_EFn84
 
-save_trained_model = False
+save_trained_model = True
 
 def save_model(model, path_and_filename): 
     print("Saving model to file " + str(path_and_filename))

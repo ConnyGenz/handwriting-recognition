@@ -109,7 +109,7 @@ if train_with_model_from_file:
 
 
 def save_checkpoint(model_state, path_and_filename): 
-    print("Saving model to file " + str(filename))
+    print("Saving model to file " + str(path_and_filename))
     torch.save(model_state, path_and_filename, _use_new_zipfile_serialization=False)
 
 # Choose whether to save trained model to a file and specify filename and path

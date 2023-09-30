@@ -90,7 +90,7 @@ cm = CharModel(29).to(device) #29 characters in alphabets
 #%% Training
 
 # Choose whether to train model from scratch or whether to continue training with a model saved to a file
-train_with_model_from_file = True
+train_with_model_from_file = False
 
 if not train_with_model_from_file:
     train_loss(num_of_timesteps, train_size, train_x_new,
@@ -98,8 +98,9 @@ if not train_with_model_from_file:
     
 if train_with_model_from_file:
 
-    print("Loading model from file")
-    saved_model = torch.load("/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_checkpoint.pth")
+    print("Loading model from file ...")
+    saved_model = torch.load("/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth")
+    saved_model.eval()
 
     train_loss(num_of_timesteps, train_size, train_x_new,
                max_str_len, train_y, saved_model, num_epochs, train_data, device)
@@ -107,16 +108,17 @@ if train_with_model_from_file:
 # Choose whether to save trained model to a file and specify filename and path
 # How to save and load models in Pytorch: https://www.youtube.com/watch?v=g6kQl_EFn84
 
-save_trained_model = False
+save_trained_model = True
 
-def save_checkpoint(model_state, path_and_filename): 
+def save_model(model, path_and_filename): 
     print("Saving model to file " + str(path_and_filename))
-    torch.save(model_state, path_and_filename, _use_new_zipfile_serialization=False)
+    torch.save(model, path_and_filename)
+
+# ggf. als dritter Parameter zu den Argumenten bei torch.save: _use_new_zipfile_serialization=False
 
 if save_trained_model: 
-    checkpoint = cm.state_dict()
-    save_under = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_checkpoint.pth"
-    save_checkpoint(checkpoint, save_under)
+    save_under = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth"
+    save_model(cm, save_under)
 
 # test for creating files
 #fp = open('/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/sales_2.txt', 'w')

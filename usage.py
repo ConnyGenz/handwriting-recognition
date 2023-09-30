@@ -85,12 +85,22 @@ test_y = encode_labels(test_size, test_data, max_str_len, alphabets, device)
 test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 
 #%% Model
-cm = CharModel(29).to(device) #29 characters in alphabets
+
+# Decide whether to create a model or to use a saved model from a file
+
+work_with_model_from_file = False 
+
+if work_with_model_from_file:
+    print("ok")
+
+if not work_with_model_from_file:
+    cm = CharModel(29).to(device) #29 characters in alphabets
+
 
 #%% Training
 
 # Choose whether to train model from scratch or whether to continue training with a model saved to a file
-train_with_model_from_file = True
+train_with_model_from_file = False
 
 if not train_with_model_from_file:
     train_loss(num_of_timesteps, train_size, train_x_new,
@@ -106,23 +116,26 @@ if train_with_model_from_file:
 
 # Choose whether to save trained model to a file and specify filename and path
 # How to save and load models in Pytorch: https://www.youtube.com/watch?v=g6kQl_EFn84
+# https://www.youtube.com/watch?v=9L9jEOwRrCg 
 
-save_trained_model = True
+save_trained_model = False
+save_model_parameters = True
 
 def save_model(model, path_and_filename): 
     print("Saving model to file " + str(path_and_filename))
     torch.save(model, path_and_filename)
 
-# ggf. als dritter Parameter zu den Argumenten bei torch.save: _use_new_zipfile_serialization=False
 
 if save_trained_model: 
     save_under = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth"
-    save_model(cm, save_under)
+    print("Saving complete model to file " + str(save_under))
+    torch.save(cm, save_under)
 
-# test for creating files
-#fp = open('/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/sales_2.txt', 'w')
-#fp.write('first line')
-#fp.close()
+if save_model_parameters:
+    storage_location = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth"
+    print("Saving complete model to file " + str(storage_location))
+    torch.save(cm.state_dict(), storage_location)
+
 
 #%% Decode model output and take a look at results
 

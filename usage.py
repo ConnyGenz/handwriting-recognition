@@ -38,10 +38,10 @@ args = parser.parse_args()
 
 #%% Variables
 
-train_size = 500
+train_size = 150000
 valid_size = 30
 test_size = 100
-num_epochs = 10
+num_epochs = 100
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 
@@ -88,7 +88,7 @@ test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 
 # Decide whether to create a model or to use a saved model from a file
 
-work_with_model_from_file = True 
+work_with_model_from_file = False 
 
 if work_with_model_from_file:
     print("Loading model parameters from file")
@@ -105,7 +105,7 @@ if not work_with_model_from_file:
 #%% Training
 
 # Choose whether to train model from scratch or whether to continue training with a model saved to a file
-do_train = False
+do_train = True
 train_with_model_from_file = False
 
 if do_train:
@@ -125,12 +125,7 @@ if train_with_model_from_file:
 # https://www.youtube.com/watch?v=9L9jEOwRrCg 
 
 save_trained_model = False
-save_model_parameters = False
-
-def save_model(model, path_and_filename): 
-    print("Saving model to file " + str(path_and_filename))
-    torch.save(model, path_and_filename)
-
+save_model_parameters = True
 
 if save_trained_model: 
     save_under = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth"

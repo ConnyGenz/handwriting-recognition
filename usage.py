@@ -98,7 +98,7 @@ if not train_with_model_from_file:
     
 if train_with_model_from_file:
 
-    saved_model = torch.load("/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_checkpoint.pt")
+    saved_model = torch.load("/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_checkpoint.pth")
 
     train_loss(num_of_timesteps, train_size, train_x_new,
                max_str_len, train_y, saved_model, num_epochs, train_data, device)
@@ -118,7 +118,7 @@ save_trained_model = True
 
 if save_trained_model: 
     checkpoint = cm.state_dict()
-    save_under = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_checkpoint.pt"
+    save_under = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_checkpoint.pth"
     save_checkpoint(checkpoint, save_under)
 
 # test for creating files

@@ -88,7 +88,7 @@ test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 
 # Decide whether to create a model or to use a saved model from a file
 
-work_with_model_from_file = False 
+work_with_model_from_file = True 
 
 if work_with_model_from_file:
     print("Loading model parameters from file")
@@ -105,7 +105,7 @@ if not work_with_model_from_file:
 #%% Training
 
 # Choose whether to train model from scratch or whether to continue training with a model saved to a file
-do_train = True
+do_train = False
 train_with_model_from_file = False
 
 if do_train:
@@ -121,19 +121,18 @@ if train_with_model_from_file:
     train_loss(num_of_timesteps, train_size, train_x_new, max_str_len, train_y, cm, num_epochs, train_data, device)
 
 # Choose whether to save trained model to a file and specify filename and path
-# How to save and load models in Pytorch: https://www.youtube.com/watch?v=g6kQl_EFn84
-# https://www.youtube.com/watch?v=9L9jEOwRrCg 
+# PyTorch Tutorial 17 - Saving and Loading Models: https://www.youtube.com/watch?v=9L9jEOwRrCg 
 
 save_trained_model = False
-save_model_parameters = True
+save_model_parameters = False
 
 if save_trained_model: 
-    save_under = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth"
+    save_under = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/new_saved_model.pth"
     print("Saving complete model to file " + str(save_under))
     torch.save(cm, save_under)
 
 if save_model_parameters:
-    storage_location = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth"
+    storage_location = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/new_saved_model.pth"
     print("Saving model parameters to file " + str(storage_location))
     torch.save(cm.state_dict(), storage_location)
 
@@ -173,7 +172,7 @@ list_of_correct_names_test_size = complete_list_of_correct_names[0:test_size-1]
 number_of_correct_names = accuracy_name(decoded_test_predictions, list_of_correct_names_test_size)
 number_of_wrong_characters = accuracy_letters(decoded_test_predictions, list_of_correct_names_test_size) 
 
-print("The number of correct names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
+print("The percentage of correct names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
 print("The percentage of wrong letters in the total number of " + str(test_size) + " letters is: " + str(number_of_wrong_characters))
 
 

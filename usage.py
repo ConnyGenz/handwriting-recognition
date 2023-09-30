@@ -90,7 +90,7 @@ cm = CharModel(29).to(device) #29 characters in alphabets
 #%% Training
 
 # Choose whether to train model from scratch or whether to continue training with a model saved to a file
-train_with_model_from_file = False
+train_with_model_from_file = True
 
 if not train_with_model_from_file:
     train_loss(num_of_timesteps, train_size, train_x_new,
@@ -108,7 +108,7 @@ if train_with_model_from_file:
 # Choose whether to save trained model to a file and specify filename and path
 # How to save and load models in Pytorch: https://www.youtube.com/watch?v=g6kQl_EFn84
 
-save_trained_model = True
+save_trained_model = False
 
 def save_model(model, path_and_filename): 
     print("Saving model to file " + str(path_and_filename))

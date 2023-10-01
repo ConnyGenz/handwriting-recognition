@@ -16,7 +16,8 @@ def accuracy_name(decoded_data, identity_train):
     for k in range(len(decoded_data)-1):
         if decoded_data[k] == identity_train[k]:
             correct_count += 1
-    return correct_count / len(identity_train)
+    percentage = correct_count / len(identity_train)
+    return correct_count, percentage
 
 
 def accuracy_letters(decoded_data, identity_train):

@@ -12,7 +12,7 @@ def accuracy_name(decoded_data, identity_train):
     # complete name predicted correctly, not just some letters
     correct_count = 0
     for k in range(len(decoded_data)):
-        if decoded_data[k-1] == identity_train[k-1]:
+        if decoded_data[k] == identity_train[k]:
             correct_count += 1
     percentage = correct_count / len(identity_train)
     return correct_count, percentage

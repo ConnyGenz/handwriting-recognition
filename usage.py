@@ -176,6 +176,8 @@ predictions_for_test_data = cm(test_data_permuted)  #use the CharModel
 encoded_test_predictions = decode_preds(predictions_for_test_data, test_size, alphabets)
 decoded_test_predictions = ctc_decode(encoded_test_predictions)
 
+print(decoded_test_predictions)
+
 complete_list_of_correct_names = test_data['IDENTITY'].tolist()
 list_of_correct_names_test_size = complete_list_of_correct_names[0:test_size-1]
 

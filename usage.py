@@ -43,6 +43,8 @@ valid_size = 30
 test_size = 100
 num_epochs = 100
 
+mini_batch_size = 25
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 
 # character to number
@@ -88,6 +90,7 @@ test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 
 # Decide whether to create a model or to use a saved model from a file
 
+##### TOGGLE 1) #####
 work_with_model_from_file = True 
 
 if work_with_model_from_file:
@@ -104,12 +107,15 @@ if not work_with_model_from_file:
 
 #%% Training
 
-# Choose whether to train model from scratch or whether to continue training with a model saved to a file
+# Choose whether to train at all, whether to train model from scratch or whether to continue training with a model saved to a file
+
+##### TOGGLE 2) #####
 do_train = False
+##### TOGGLE 3) #####
 train_with_model_from_file = False
 
 if do_train:
-    train_loss(num_of_timesteps, train_size, train_x_new,
+    train_loss(num_of_timesteps, train_size, mini_batch_size, train_x_new,
                max_str_len, train_y, cm, num_epochs, train_data, device)
     
 if train_with_model_from_file:
@@ -118,12 +124,14 @@ if train_with_model_from_file:
     cm = torch.load("/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/my_saved_model.pth")
     cm.train()
 
-    train_loss(num_of_timesteps, train_size, train_x_new, max_str_len, train_y, cm, num_epochs, train_data, device)
+    train_loss(num_of_timesteps, train_size, mini_batch_size, train_x_new, max_str_len, train_y, cm, num_epochs, train_data, device)
 
 # Choose whether to save trained model to a file and specify filename and path
 # PyTorch Tutorial 17 - Saving and Loading Models: https://www.youtube.com/watch?v=9L9jEOwRrCg 
 
+##### TOGGLE 4) #####
 save_trained_model = False
+##### TOGGLE 5) #####
 save_model_parameters = False
 
 if save_trained_model: 
@@ -140,7 +148,9 @@ if save_model_parameters:
 #%% Decode model output and take a look at results
 
 # Predictions für Mini-Batches erstellen:
-mini_x_for_pred = create_mini_batches(train_x_new, 25)
+mini_x_for_pred = create_mini_batches(train_x_new, mini_batch_size)
+
+
 train_data_permuted_batch_zero = torch.permute(mini_x_for_pred[0], (0,3,2,1))
 predictions_for_batch_zero = cm(train_data_permuted_batch_zero)  #use the CharModel
 

@@ -24,7 +24,7 @@ def create_mini_batches(big_batch, mini_batch_size):
   return mini_batches
 
 
-def train_loss(num_of_timesteps, train_size, train_x_new,
+def train_loss(num_of_timesteps, train_size, mini_batch_size, train_x_new,
                max_str_len,train_y, cm, num_epochs, train_data, device):
     
     loss = nn.CTCLoss(blank=0)
@@ -34,15 +34,15 @@ def train_loss(num_of_timesteps, train_size, train_x_new,
     for i in range(train_size):
         train_label_len[i] = len(train_data.loc[i, 'IDENTITY'])
     train_label_len_tensor = torch.tensor(train_label_len, dtype=torch.long).to(device)
-    my_mini_train_label_len_tensor = create_mini_batches(train_label_len_tensor, 25)
+    my_mini_train_label_len_tensor = create_mini_batches(train_label_len_tensor, mini_batch_size)
       
     train_input_len = np.ones([train_size, 1]) * (num_of_timesteps-2)
     new_input_lengths = torch.tensor(train_input_len, dtype=torch.int32).to(device)
-    my_mini_new_input_lengths = create_mini_batches(new_input_lengths, 25)
+    my_mini_new_input_lengths = create_mini_batches(new_input_lengths, mini_batch_size)
 
-    my_mini_x = create_mini_batches(train_x_new, 25)
+    my_mini_x = create_mini_batches(train_x_new, mini_batch_size)
 
-    my_mini_y = create_mini_batches(train_y, 25)
+    my_mini_y = create_mini_batches(train_y, mini_batch_size)
     
     
     epochen_counter = 1

@@ -88,9 +88,8 @@ test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 
 #%% Model
 
-# Decide whether to create a model or to use a saved model from a file
-
 ##### TOGGLE 1) #####
+# Decide whether to create a model or to use a saved model from a file
 work_with_model_from_file = True 
 
 if work_with_model_from_file:
@@ -107,11 +106,11 @@ if not work_with_model_from_file:
 
 #%% Training
 
-# Choose whether to train at all, whether to train model from scratch or whether to continue training with a model saved to a file
-
 ##### TOGGLE 2) #####
+# Choose whether to train at all
 do_train = False
 ##### TOGGLE 3) #####
+# Choose whether to train model from scratch or whether to continue training with a model saved to a file
 train_with_model_from_file = False
 
 if do_train:
@@ -126,12 +125,15 @@ if train_with_model_from_file:
 
     train_loss(num_of_timesteps, train_size, mini_batch_size, train_x_new, max_str_len, train_y, cm, num_epochs, train_data, device)
 
-# Choose whether to save trained model to a file and specify filename and path
-# PyTorch Tutorial 17 - Saving and Loading Models: https://www.youtube.com/watch?v=9L9jEOwRrCg 
+
 
 ##### TOGGLE 4) #####
+# Choose whether to save the complete trained model to a file and specify filename and path
+# PyTorch Tutorial 17 - Saving and Loading Models: https://www.youtube.com/watch?v=9L9jEOwRrCg 
 save_trained_model = False
 ##### TOGGLE 5) #####
+# Choose whether to save just the the parameters of the trained model to a file and specify filename and path
+# PyTorch Tutorial 17 - Saving and Loading Models: https://www.youtube.com/watch?v=9L9jEOwRrCg 
 save_model_parameters = False
 
 if save_trained_model: 
@@ -187,27 +189,4 @@ number_of_wrong_characters = accuracy_letters(decoded_test_predictions, list_of_
 print("The number of correct names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
 print("The percentage of correct names in the test set of size " + str(test_size) + " is: " + str(percentage))
 print("The percentage of wrong letters in the total number of " + str(test_size) + " letters is: " + str(number_of_wrong_characters))
-
-
-'''
-# validation:
-identity_valid = [name for name in valid_data["IDENTITY"]]
-permuted_val = torch.permute(valid_x_new, (0,3,2,1))
-pred_val = cm(permuted_val)
-val_dec = decode_preds(pred_val, valid_size, alphabets)
-val_dec = ctc_decode(val_dec)
-
-accuracy_validation = accuracy_name(val_dec, identity_valid)
-
-# adapt hyperparameter
-'''
-
-
-
-
-
-
-
-
-
 

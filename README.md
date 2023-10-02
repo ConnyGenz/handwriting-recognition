@@ -21,7 +21,7 @@ evaluation.py: evaluates the accuracy of the Model
 usage.py: main program file
 
 ## Run the Code
-In order to run the code, download the data from kaggle. In order to run the code, execute the usage.py file adding the directory where you saved the data as a command line argument. If you are on the beet server of Heinrich-Heine-Uni, you can use "/data/rafael/", where the data currently (October 2023) lies.
+In order to run the code, execute the usage.py file adding the directory where you saved the data from kaggle as a command line argument. If you are on the beet server of Heinrich-Heine-Uni, you can use "/data/rafael/", where the data currently lies (October 2023).
 
 ## Toggles
 The "Toggles" in the usage.py file allow you to use our code in different ways. Each toggle has an accompanying comment describing the effect of the respective toggle. Before you execute the code, go through the toggles (marked as "##### TOGGLE X) #####") and make sure that you have set each one to the desired setting.

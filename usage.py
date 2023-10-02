@@ -175,6 +175,7 @@ predictions_for_test_data = cm(test_data_permuted)  #use the CharModel
 encoded_test_predictions = decode_preds(predictions_for_test_data, test_size, alphabets)
 decoded_test_predictions = ctc_decode(encoded_test_predictions)
 
+print("Names predicted by the model for the data from the test set: \n")
 print(decoded_test_predictions)
 
 complete_list_of_correct_names = test_data['IDENTITY'].tolist()
@@ -183,7 +184,7 @@ list_of_correct_names_test_size = complete_list_of_correct_names[0:test_size]
 number_of_correct_names, percentage = accuracy_name(decoded_test_predictions, list_of_correct_names_test_size)
 number_of_wrong_characters = accuracy_letters(decoded_test_predictions, list_of_correct_names_test_size) 
 
-print("The number of correct names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
-print("The percentage of correct names in the test set of size " + str(test_size) + " is: " + str(percentage))
-print("The percentage of wrong letters in the total number of " + str(test_size) + " letters is: " + str(number_of_wrong_characters))
+print("\n The number of correct names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
+print("\n The percentage of correct names in the test set of size " + str(test_size) + " is: " + str(percentage))
+print("\n The percentage of wrong letters in the total number of " + str(test_size) + " letters is: " + str(number_of_wrong_characters))
 

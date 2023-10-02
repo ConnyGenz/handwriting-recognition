@@ -8,16 +8,16 @@ Created on Mon Sep 26 18:04:07 2022
 from torchmetrics.text import CharErrorRate
 
 # looks at whether the complete name has been predicted correctly, not just some letters
-def accuracy_name(decoded_data, identity_train):    
+def accuracy_name(prediction, identity):    
     correct_count = 0
-    for k in range(len(decoded_data)):
-        if decoded_data[k] == identity_train[k]:
+    for k in range(len(prediction)):
+        if prediction[k] == identity[k]:
             correct_count += 1
-    percentage = correct_count / len(identity_train)
+    percentage = correct_count / len(identity)
     return correct_count, percentage
 
-# looks at what percentage of letters needs to be changed to go from prediction to groundtruth?
-def accuracy_letters(decoded_data, identity_train):
+# looks at what percentage of letters needs to be changed to go from prediction to groundtruth
+def accuracy_letters(prediction, identity):
     cer = CharErrorRate()
-    cer_value = cer(decoded_data, identity_train)
+    cer_value = cer(prediction, identity)
     return cer_value

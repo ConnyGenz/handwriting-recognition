@@ -32,20 +32,18 @@ def preprocess(img):
 
 
 
-def encode(given_path, size, data, device):#, args):
+def encode(beginning_of_path, given_path, size, data, device):
     # encode images to numpy arrays
     # von kaggle: https://www.kaggle.com/code/samfc10/handwriting-recognition-using-crnn-in-keras/notebook#Check-model-performance-on-validation-set
     data_x = []
-    beginning_of_path = "/data/rafael/"
-    extension_of_path = given_path
-    combined_path = beginning_of_path + extension_of_path
+    # beginning_of_path = "/data/rafael/"
+    # extension_of_path = given_path
+    combined_path = beginning_of_path + given_path
     for i in range(size):
         path = Path(combined_path)
-        #path = args.command_line_path
         os.chdir(path)
         image = np.array(Image.open(data.loc[i,'FILENAME']).convert('L'))
         image = preprocess(image)
-        #print(i)
         image = image/255.
         data_x.append(image)
         
@@ -67,7 +65,7 @@ def read_labels(file):
 
 '''
 #---------------------------- view data      
-path = (Path().home()/"OneDrive"/"Studium"/"Master"/"Semester 0"/"Deep Learning in NLP"/"Data"/"test")
+path = "where/you/saved/the/images"
 os.chdir(path)        
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg

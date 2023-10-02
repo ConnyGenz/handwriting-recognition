@@ -27,14 +27,12 @@ from evaluation import accuracy_letters
 
 # Todo (if time allows): Provide option to enter path to input data at start of program
 #%% not working yet
-'''
-parser = argparse.ArgumentParser(description='Read the path where the data is stored from the argument line')
-parser.add_argument('--command_line_path', 
-                    type=Path,
-                    default=Path().home()/"OneDrive"/"Studium"/"Master"/"Semester 0"/"Deep Learning in NLP"/"Data", 
-                    help='Stores path of data as pathlib.Path in "command_line_path" variable. If none is given, default is used.')
+
+parser = argparse.ArgumentParser()
+parser.add_argument("command_line_path", help='takes the path to the directory where the data to be processed by the model is stored')
 args = parser.parse_args()
-'''
+user_path = args.command_line_path
+
 
 #%% Variables
 
@@ -58,7 +56,7 @@ num_of_timesteps = 64                   # length of predicted labels (for images
 
 #%% Preprocessing
 
-path = Path("/data/rafael")
+path = Path(user_path)
 #path = args.command_line_path
 os.chdir(path)
 train_data = read_labels("written_name_train_v2.csv")
@@ -66,9 +64,9 @@ train_data = read_labels("written_name_train_v2.csv")
 test_data = read_labels("written_name_test_v2.csv")
 
 # use encode function from "read_data" file
-train_x_new = encode("train", train_size, train_data, device)
+train_x_new = encode(user_path, "train", train_size, train_data, device)
 # valid_x_new = encode("validation", valid_size, valid_data, device)
-test_x_new = encode("test", test_size, test_data, device)
+test_x_new = encode(user_path, "test", test_size, test_data, device)
 
 
 #%% Variables #2

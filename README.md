@@ -26,20 +26,15 @@ In order to run the code, download the data from kaggle. In the usage.py file, u
 ## Toggles
 The "Toggles" in the usage.py file allow you to use our code in different ways. Each toggle has an accompanying comment describing the effect of the respective toggle. Before you execute the code, go through the toggles (marked as "##### TOGGLE X) #####") and make sure that you have set each one to the desired setting.
 
-"##### TOGGLE 1) #####"
-Decide whether to create a model or to use a saved model from a file
+"##### TOGGLE 1) #####": Decide whether to create a model or to use a saved model from a file
 
-"##### TOGGLE 2) #####"
-Choose whether to train at all
+"##### TOGGLE 2) #####": Choose whether to train at all or whether to only use the model for inference 
 
-"##### TOGGLE 3) #####"
-Choose whether to train model from scratch or whether to continue training with a model saved to a file
+"##### TOGGLE 3) #####": Choose whether to train model from scratch or whether to continue training with a model saved to a file
 
-"##### TOGGLE 4) #####"
-Choose whether to save the complete trained model to a file and specify filename and path
+"##### TOGGLE 4) #####": Choose whether to save the complete trained model to a file and specify filename and path
 
-"##### TOGGLE 5) #####"
-Choose whether to save just the the parameters of the trained model to a file and specify filename and path
+"##### TOGGLE 5) #####": Choose whether to save just the the parameters of the trained model to a file and specify filename and path
 
 ## Requirements
 The python version 3.10.12 was used. The external packages that were used can be found in the "requirements.txt" file.

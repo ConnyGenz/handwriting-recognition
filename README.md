@@ -23,6 +23,8 @@ usage.py: main program file
 ### Run the Code
 In order to run the code, download the data from kaggle. In the usage.py file, under "#%% Preprocessing", change the path to the directory where you saved the data. Insert that path also in the read_data.py file in the encode function for the "beginning_of_path" variable. In order to run the code, execute the usage.py file.
 
+## Toggles
+
 The "Toggles" in the usage.py file allow you to use our code in different ways. Each toggle has an accompanying comment describing the effect of the respective toggle. Before you execute the code, go through the toggles (marked as "##### TOGGLE X) #####") and makes sure that you have set each one to the desired setting.
 
 "##### TOGGLE 1) #####"

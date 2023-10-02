@@ -75,6 +75,5 @@ def train_loss(num_of_timesteps, train_size, mini_batch_size, train_x_new,
         index +=1
 
       epochen_counter +=1
-    #for i in predictions_list:
-     #   print(i.shape)
+
     return None    

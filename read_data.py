@@ -10,9 +10,10 @@ import os
 from pathlib import Path
 import numpy as np
 import cv2
-#from matplotlib import image as img
 from PIL import Image
 import torch
+# next two imports for displaying images and plotting data
+#from matplotlib import image as img
 #from matplotlib import pyplot
 
 def preprocess(img):
@@ -49,7 +50,6 @@ def encode(beginning_of_path, given_path, size, data, device):
         
     data_x = np.array(data_x).reshape(-1, 256, 64, 1)
     data_x = torch.tensor(data_x, dtype=torch.float32).to(device)
-    print(data_x.shape)
     return data_x
 
 

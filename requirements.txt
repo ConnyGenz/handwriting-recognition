@@ -4,3 +4,5 @@ pathlib==1.0.1
 pillow==8.4.0
 torch==1.11.0
 opencv-python==4.6.0.66
+argparse==3.11
+torchmetrics==1.2.0

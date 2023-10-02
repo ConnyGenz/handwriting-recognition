@@ -145,11 +145,11 @@ if save_model_parameters:
     torch.save(cm.state_dict(), storage_location)
 
 
-#%% Decode model output and take a look at results
+#%% Decode model output and take a look at results (with training data)
+# Was used to manually assess performance of model during training 
 
-# Predictions für Mini-Batches erstellen:
+# Create predictions for mini-batches:
 mini_x_for_pred = create_mini_batches(train_x_new, mini_batch_size)
-
 
 train_data_permuted_batch_zero = torch.permute(mini_x_for_pred[0], (0,3,2,1))
 predictions_for_batch_zero = cm(train_data_permuted_batch_zero)  #use the CharModel
@@ -165,8 +165,8 @@ encoded_five = decode_preds(predictions_for_batch_five, 25, alphabets)
 decoded_zero = ctc_decode(encoded_zero)
 decoded_five = ctc_decode(encoded_five)
 
-print("decoded names from batch 0: ", decoded_zero[0:24])
-print("decoded names from batch 5: ", decoded_five[0:24])
+# print("decoded names from batch 0: ", decoded_zero[0:24])
+# print("decoded names from batch 5: ", decoded_five[0:24])
 
 
 #%% Evaluation - check accuracy and error rate on test set

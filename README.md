@@ -21,7 +21,7 @@ evaluation.py: evaluates the accuracy of the Model
 usage.py: main program file
 
 ## Run the Code
-In order to run the code, download the data from kaggle. In the usage.py file, under "#%% Preprocessing", change the path to the directory where you saved the data. Insert that path also in the read_data.py file in the encode function for the "beginning_of_path" variable. In order to run the code, execute the usage.py file.
+In order to run the code, download the data from kaggle. In order to run the code, execute the usage.py file adding the directory where you saved the data as a command line argument. If you are on the beet server of Heinrich-Heine-Uni, you can use "/data/rafael/", where the data currently (October 2023) lies.
 
 ## Toggles
 The "Toggles" in the usage.py file allow you to use our code in different ways. Each toggle has an accompanying comment describing the effect of the respective toggle. Before you execute the code, go through the toggles (marked as "##### TOGGLE X) #####") and make sure that you have set each one to the desired setting.
@@ -35,6 +35,9 @@ The "Toggles" in the usage.py file allow you to use our code in different ways. 
 "##### TOGGLE 4) #####": Choose whether to save the complete trained model to a file and specify filename and path
 
 "##### TOGGLE 5) #####": Choose whether to save just the the parameters of the trained model to a file and specify filename and path
+
+## Variables
+In the usage.py file, you will find variables, which you can change according to your wishes: train_size (amount of data used for training), valid_size (amount of data used for validation), test_size (amount of data used for testing), num_epochs (number of epochs the model is supposed to train), mini_batch_size (size of one mini batch).
 
 ## Requirements
 The python version 3.10.12 was used. The external packages that were used can be found in the "requirements.txt" file.

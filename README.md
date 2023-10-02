@@ -20,7 +20,7 @@ evaluation.py: evaluates the accuracy of the Model
 
 usage.py: main program file
 
-### Run the Code
+## Run the Code
 In order to run the code, download the data from kaggle. In the usage.py file, under "#%% Preprocessing", change the path to the directory where you saved the data. Insert that path also in the read_data.py file in the encode function for the "beginning_of_path" variable. In order to run the code, execute the usage.py file.
 
 ## Toggles

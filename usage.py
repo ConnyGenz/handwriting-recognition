@@ -124,7 +124,6 @@ if train_with_model_from_file:
     train_loss(num_of_timesteps, train_size, mini_batch_size, train_x_new, max_str_len, train_y, cm, num_epochs, train_data, device)
 
 
-
 ##### TOGGLE 4) #####
 # Choose whether to save the complete trained model to a file and specify filename and path
 # PyTorch Tutorial 17 - Saving and Loading Models: https://www.youtube.com/watch?v=9L9jEOwRrCg 
@@ -157,8 +156,8 @@ predictions_for_batch_zero = cm(train_data_permuted_batch_zero)  #use the CharMo
 train_data_permuted_batch_five = torch.permute(mini_x_for_pred[5], (0,3,2,1))
 predictions_for_batch_five = cm(train_data_permuted_batch_five)  #use the CharModel
 
-encoded_zero = decode_preds(predictions_for_batch_zero, 25, alphabets)
-encoded_five = decode_preds(predictions_for_batch_five, 25, alphabets)
+encoded_zero = decode_preds(predictions_for_batch_zero, mini_batch_size, alphabets)
+encoded_five = decode_preds(predictions_for_batch_five, mini_batch_size, alphabets)
 # >> result is a list of strings of the form "AAAA°NNN°NNNNNN°AA" (name "Anna", uncleaned)
 
 # >> Derive “Anna” from “"AAAA°NNN°NNNNNN°AA"

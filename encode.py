@@ -24,8 +24,8 @@ def min_str(train, train_size):
 # convert one name (label) to an array of numbers as definded in the alphabets dictionary
 def label_to_num(label, alphabets):
     label = list(label)
-    list = [alphabets[i] for i in label]
-    return np.array(list)
+    liste = [alphabets[i] for i in label]
+    return np.array(liste)
    
 
 # encode all ground-truth strings (reference) from input data and return tensor

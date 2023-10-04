@@ -13,7 +13,7 @@ import argparse
 
 # import from own project
 from read_data import read_labels
-from read_data import encode_image
+from read_data import encode
 from encode import max_str
 from encode import min_str
 from encode import encode_labels
@@ -36,10 +36,10 @@ user_path = args.command_line_path
 
 #%% Variables
 
-train_size = 150
+train_size = 150000
 valid_size = 30
 test_size = 100
-num_epochs = 10
+num_epochs = 100
 
 mini_batch_size = 25
 
@@ -57,15 +57,16 @@ num_of_timesteps = 64                   # length of predicted labels (for images
 #%% Preprocessing
 
 path = Path(user_path)
+#path = args.command_line_path
 os.chdir(path)
 train_data = read_labels("written_name_train_v2.csv")
 # valid_data = read_labels("written_name_validation_v2.csv")
 test_data = read_labels("written_name_test_v2.csv")
 
-# use encode_image function from "read_data" file
-train_x_new = encode_image(user_path, "train", train_size, train_data, device)
-# valid_x_new = encode_image("validation", valid_size, valid_data, device)
-test_x_new = encode_image(user_path, "test", test_size, test_data, device)
+# use encode function from "read_data" file
+train_x_new = encode(user_path, "train", train_size, train_data, device)
+# valid_x_new = encode("validation", valid_size, valid_data, device)
+test_x_new = encode(user_path, "test", test_size, test_data, device)
 
 
 #%% Variables #2
@@ -87,7 +88,7 @@ test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 
 ##### TOGGLE 1) #####
 # Decide whether to create a model or to use a saved model from a file
-work_with_model_from_file = False 
+work_with_model_from_file = True 
 
 if work_with_model_from_file:
     print("Loading model parameters from file")
@@ -105,8 +106,7 @@ if not work_with_model_from_file:
 
 ##### TOGGLE 2) #####
 # Choose whether to train at all
-do_train = True
-
+do_train = False
 ##### TOGGLE 3) #####
 # Choose whether to train model from scratch or whether to continue training with a model saved to a file
 train_with_model_from_file = False
@@ -128,7 +128,6 @@ if train_with_model_from_file:
 # Choose whether to save the complete trained model to a file and specify filename and path
 # PyTorch Tutorial 17 - Saving and Loading Models: https://www.youtube.com/watch?v=9L9jEOwRrCg 
 save_trained_model = False
-
 ##### TOGGLE 5) #####
 # Choose whether to save just the the parameters of the trained model to a file and specify filename and path
 # PyTorch Tutorial 17 - Saving and Loading Models: https://www.youtube.com/watch?v=9L9jEOwRrCg 
@@ -183,9 +182,9 @@ complete_list_of_correct_names = test_data['IDENTITY'].tolist()
 list_of_correct_names_test_size = complete_list_of_correct_names[0:test_size]
 
 number_of_correct_names, percentage = accuracy_name(decoded_test_predictions, list_of_correct_names_test_size)
-character_error_rate = accuracy_letters(decoded_test_predictions, list_of_correct_names_test_size) 
+number_of_wrong_characters = accuracy_letters(decoded_test_predictions, list_of_correct_names_test_size) 
 
 print("\n The number of correct names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
 print("\n The percentage of correct names in the test set of size " + str(test_size) + " is: " + str(percentage))
-print("\n The character error rate for " + str(test_size) + " recognized names from the test set is: " + str(character_error_rate))
+print("\n The percentage of wrong letters in the total number of " + str(test_size) + " letters is: " + str(number_of_wrong_characters))
 

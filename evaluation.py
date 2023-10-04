@@ -16,7 +16,7 @@ def accuracy_name(prediction, identity):
     percentage = correct_count / len(identity)
     return correct_count, percentage
 
-# looks at how many characters need to be changed to go from prediction to ground truth
+# looks at what percentage of letters needs to be changed to go from prediction to groundtruth
 def accuracy_letters(prediction, identity):
     cer = CharErrorRate()
     cer_value = cer(prediction, identity)

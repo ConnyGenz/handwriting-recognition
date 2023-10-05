@@ -7,8 +7,7 @@ Created on Mon Sep 26 18:00:07 2022
 import torch
 
 def num_to_label(num, alphabets):
-    # convert numbers to labels for converting back the predictions
-    # takes on number as input and converts into the respective letter
+    # take number and convert to corresponding letter
     ret = ""
     if num==0:  # CTC Blank (0)
         ret = "°"
@@ -33,10 +32,9 @@ def decode_preds(preds, size, alphabets):
         cap_preds.append(tp)   # append all string-labels to a list
     return cap_preds
 
-# "Cleaning" of "raw prediction"
-# remove the unnecessary letters and °
+# Cleaning of raw prediction (remove duplicate letters and "°")
 def ctc_decode(encoded):
-    liste = []
+    list = []
     for i in encoded:
         temp2 = ""
         temp = i.split("°")
@@ -44,5 +42,5 @@ def ctc_decode(encoded):
             # >> remove duplicate letters
             result = "".join(dict.fromkeys(k))
             temp2 += result
-        liste.append(temp2)
-    return liste
+        list.append(temp2)
+    return list

@@ -13,7 +13,7 @@ import argparse
 
 # import from own project
 from read_data import read_labels
-from read_data import encode
+from read_data import encode_image
 from encode import max_str
 from encode import min_str
 from encode import encode_labels
@@ -24,6 +24,14 @@ from decode import decode_preds
 from decode import ctc_decode
 from evaluation import accuracy_name
 from evaluation import accuracy_letters
+
+# Todo (if time allows): Provide option to enter path to input data at start of program
+#%% not working yet
+
+parser = argparse.ArgumentParser()
+parser.add_argument("command_line_path", help='takes the path to the directory where the data to be processed by the model is stored')
+args = parser.parse_args()
+user_path = args.command_line_path
 
 
 #%% Variables
@@ -37,11 +45,6 @@ mini_batch_size = 25
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("command_line_path", help='takes the path to the directory where the data to be processed by the model is stored')
-args = parser.parse_args()
-user_path = args.command_line_path
-
 # character to number
 alphabets = {"A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7,"H":8,"I":9,"J":10,"K":11,
            "L":12,"M":13,"N":14,"O":15,"P":16,"Q":17,"R":18,"S":19,"T":20,"U":21,
@@ -54,16 +57,15 @@ num_of_timesteps = 64                   # length of predicted labels (for images
 #%% Preprocessing
 
 path = Path(user_path)
-#path = args.command_line_path
 os.chdir(path)
 train_data = read_labels("written_name_train_v2.csv")
 # valid_data = read_labels("written_name_validation_v2.csv")
 test_data = read_labels("written_name_test_v2.csv")
 
-# use encode function from "read_data" file
-train_x_new = encode(user_path, "train", train_size, train_data, device)
-# valid_x_new = encode("validation", valid_size, valid_data, device)
-test_x_new = encode(user_path, "test", test_size, test_data, device)
+# use encode_image function from "read_data" file
+train_x_new = encode_image(user_path, "train", train_size, train_data, device)
+# valid_x_new = encode_image("validation", valid_size, valid_data, device)
+test_x_new = encode_image(user_path, "test", test_size, test_data, device)
 
 
 #%% Variables #2
@@ -85,7 +87,7 @@ test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 
 ##### TOGGLE 1) #####
 # Decide whether to create a model or to use a saved model from a file
-work_with_model_from_file = False
+work_with_model_from_file = False 
 
 if work_with_model_from_file:
     print("Loading model parameters from file")
@@ -181,9 +183,9 @@ complete_list_of_correct_names = test_data['IDENTITY'].tolist()
 list_of_correct_names_test_size = complete_list_of_correct_names[0:test_size]
 
 number_of_correct_names, percentage = accuracy_name(decoded_test_predictions, list_of_correct_names_test_size)
-number_of_wrong_characters = accuracy_letters(decoded_test_predictions, list_of_correct_names_test_size) 
+character_error_rate = accuracy_letters(decoded_test_predictions, list_of_correct_names_test_size) 
 
 print("\n The number of correct names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
 print("\n The percentage of correct names in the test set of size " + str(test_size) + " is: " + str(percentage))
-print("\n The percentage of wrong letters in the total number of " + str(test_size) + " letters is: " + str(number_of_wrong_characters))
+print("\n The character error rate for " + str(test_size) + " recognized names from the test set is: " + str(character_error_rate))
 

@@ -7,9 +7,8 @@ Created on Mon Sep 26 16:13:46 2022
 import numpy as np
 import torch
 
-
+# find the length of longest name in data (purpose: other labels need to be padded to that length)
 def max_str(train, train_size):
-    # derive the count of letters of the longest name
     liste1 = [train.loc[i,"IDENTITY"] for i in range(train_size)]
     all_lists = liste1
     longest_name = max(all_lists, key=len)
@@ -22,17 +21,15 @@ def min_str(train, train_size):
     longest_name = min(all_lists, key=len)
     return len(longest_name)
 
-
+# convert one name (label) to an array of numbers as definded in the alphabets dictionary
 def label_to_num(label, alphabets):
-    # convert names (labels) to numbers as definded in the alphabets dictionary
-    # takes a whole name as input
     label = list(label)
     liste = [alphabets[i] for i in label]
     return np.array(liste)
    
 
-
-def encode_labels(size, data, max_str_len,alphabets, device):
+# encode all ground-truth strings (reference) from input data and return tensor
+def encode_labels(size, data, max_str_len, alphabets, device):
     # placeholder for real labels
     label_placeholder = np.ones([size, max_str_len]) * 0      
     # placeholder is filled with real data in encoded form

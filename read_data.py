@@ -12,13 +12,13 @@ import numpy as np
 import cv2
 from PIL import Image
 import torch
-# next two imports for displaying images and plotting data
+# following two imports are optional, used for displaying images and plotting data
 #from matplotlib import image as img
 #from matplotlib import pyplot
 
+# generate images of shape height=64 and width=256
+# von kaggle: https://www.kaggle.com/code/samfc10/handwriting-recognition-using-crnn-in-keras/notebook#Check-model-performance-on-validation-set
 def preprocess(img):
-    # generate images of shape height=64 and width=256
-    # von kaggle: https://www.kaggle.com/code/samfc10/handwriting-recognition-using-crnn-in-keras/notebook#Check-model-performance-on-validation-set
     (h, w) = img.shape
     final_img = np.ones([64, 256])*255 # 255 = blank white image
     # crop
@@ -32,17 +32,14 @@ def preprocess(img):
     return cv2.rotate(final_img, cv2.ROTATE_90_CLOCKWISE)
 
 
-
-def encode(beginning_of_path, given_path, size, data, device):
-    # encode images to numpy arrays
-    # von kaggle: https://www.kaggle.com/code/samfc10/handwriting-recognition-using-crnn-in-keras/notebook#Check-model-performance-on-validation-set
+# encode images to input tensors
+# von kaggle: https://www.kaggle.com/code/samfc10/handwriting-recognition-using-crnn-in-keras/notebook#Check-model-performance-on-validation-set
+def encode_image(beginning_of_path, given_path, size, data, device):
     data_x = []
-    # beginning_of_path = "/data/rafael/"
-    # extension_of_path = given_path
     combined_path = beginning_of_path + given_path
+    os.chdir(Path(combined_path))
+
     for i in range(size):
-        path = Path(combined_path)
-        os.chdir(path)
         image = np.array(Image.open(data.loc[i,'FILENAME']).convert('L'))
         image = preprocess(image)
         image = image/255.

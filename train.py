@@ -8,6 +8,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 import numpy as np
+
 # >> See documentation on CTC loss with pytorch:
 # >> https://pytorch.org/docs/stable/generated/torch.nn.CTCLoss.html 
 
@@ -45,11 +46,10 @@ def train_loss(num_of_timesteps, train_size, mini_batch_size, train_x_new,
     my_mini_y = create_mini_batches(train_y, mini_batch_size)
     
     
-    epochen_counter = 1
+    epoch_counter = 1
     
     
     # train the Model:
-    predictions_list = []
     for k in range(num_epochs):
       index = 0
       for kl in range(len(my_mini_x)):
@@ -57,9 +57,6 @@ def train_loss(num_of_timesteps, train_size, mini_batch_size, train_x_new,
         predictions = cm(train_data_permuted)  #use the CharModel
         predictions = predictions[:, 2:, :]
         permuted_predictions = torch.permute(predictions, (1,0,2))
-        steps, bs, number_of_labels = permuted_predictions.size()
-
-        #log_softmax_values = F.log_softmax(permuted_predictions, 2)
 
         new_targets = my_mini_y[index]
 
@@ -70,10 +67,10 @@ def train_loss(num_of_timesteps, train_size, mini_batch_size, train_x_new,
         new_calculated_loss.backward()
         optimizer.step()
         optimizer.zero_grad()
-        print("Loss in epoch " + str(epochen_counter) + " and Mini-Batch " + str(index) + " is: " + str(new_calculated_loss))
+        print("Loss in epoch " + str(epoch_counter) + " and Mini-Batch " + str(index) + " is: " + str(new_calculated_loss))
 
         index +=1
 
-      epochen_counter +=1
+      epoch_counter +=1
 
     return None    

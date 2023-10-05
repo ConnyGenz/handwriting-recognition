@@ -30,7 +30,7 @@ from evaluation import accuracy_letters
 
 train_size = 300
 valid_size = 30
-test_size = 30
+test_size = 29
 num_epochs = 10
 
 mini_batch_size = 25

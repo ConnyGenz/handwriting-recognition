@@ -17,7 +17,7 @@ import torch
 #from matplotlib import pyplot
 
 # generate images of shape height=64 and width=256
-# von kaggle: https://www.kaggle.com/code/samfc10/handwriting-recognition-using-crnn-in-keras/notebook#Check-model-performance-on-validation-set
+# from kaggle: https://www.kaggle.com/code/samfc10/handwriting-recognition-using-crnn-in-keras/notebook#Check-model-performance-on-validation-set
 def preprocess(img):
     (h, w) = img.shape
     final_img = np.ones([64, 256])*255 # 255 = blank white image
@@ -33,7 +33,7 @@ def preprocess(img):
 
 
 # encode images to input tensors
-# von kaggle: https://www.kaggle.com/code/samfc10/handwriting-recognition-using-crnn-in-keras/notebook#Check-model-performance-on-validation-set
+# from kaggle: https://www.kaggle.com/code/samfc10/handwriting-recognition-using-crnn-in-keras/notebook#Check-model-performance-on-validation-set
 def encode_image(beginning_of_path, given_path, size, data, device):
     data_x = []
     combined_path = beginning_of_path + given_path

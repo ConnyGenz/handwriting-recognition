@@ -32,8 +32,9 @@ def decode_preds(preds, size, alphabets):
         cap_preds.append(tp)   # append all string-labels to a list
     return cap_preds
 
-# Cleaning of raw prediction (remove duplicate letters and "°")
+
 def ctc_decode(encoded):
+    # Cleaning of raw prediction (remove duplicate letters and "°")
     list = []
     for i in encoded:
         temp2 = ""

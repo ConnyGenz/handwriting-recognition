@@ -25,13 +25,6 @@ from decode import ctc_decode
 from evaluation import accuracy_name
 from evaluation import accuracy_letters
 
-# Todo (if time allows): Provide option to enter path to input data at start of program
-#%% not working yet
-
-parser = argparse.ArgumentParser()
-parser.add_argument("command_line_path", help='takes the path to the directory where the data to be processed by the model is stored')
-args = parser.parse_args()
-user_path = args.command_line_path
 
 
 #%% Variables
@@ -44,6 +37,11 @@ num_epochs = 10
 mini_batch_size = 25
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
+
+parser = argparse.ArgumentParser()
+parser.add_argument("command_line_path", help='takes the path to the directory where the data to be processed by the model is stored')
+args = parser.parse_args()
+user_path = args.command_line_path
 
 # character to number
 alphabets = {"A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7,"H":8,"I":9,"J":10,"K":11,
@@ -185,7 +183,7 @@ list_of_correct_names_test_size = complete_list_of_correct_names[0:test_size]
 number_of_correct_names, percentage = accuracy_name(decoded_test_predictions, list_of_correct_names_test_size)
 character_error_rate = accuracy_letters(decoded_test_predictions, list_of_correct_names_test_size) 
 
-print("\n The number of correct names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
-print("\n The percentage of correct names in the test set of size " + str(test_size) + " is: " + str(percentage))
+print("\n The number of correctly recognized names in the test set of size " + str(test_size) + " is: " + str(number_of_correct_names))
+print("\n The percentage of correctly recognized names in the test set of size " + str(test_size) + " is: " + str(percentage))
 print("\n The character error rate for " + str(test_size) + " recognized names from the test set is: " + str(character_error_rate))
 

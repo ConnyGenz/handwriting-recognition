@@ -28,9 +28,9 @@ from evaluation import accuracy_letters
 
 #%% Variables
 
-train_size = 300
+train_size = 1000
 valid_size = 30
-test_size = 200
+test_size = 100
 num_epochs = 10
 
 mini_batch_size = 25

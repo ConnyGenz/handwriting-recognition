@@ -25,25 +25,22 @@ from decode import ctc_decode
 from evaluation import accuracy_name
 from evaluation import accuracy_letters
 
-# Todo (if time allows): Provide option to enter path to input data at start of program
-#%% not working yet
+
+#%% Variables
+
+train_size = 150
+valid_size = 30
+test_size = 100
+num_epochs = 10
+
+mini_batch_size = 25
+
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("command_line_path", help='takes the path to the directory where the data to be processed by the model is stored')
 args = parser.parse_args()
 user_path = args.command_line_path
-
-
-#%% Variables
-
-train_size = 150000
-valid_size = 30
-test_size = 100
-num_epochs = 100
-
-mini_batch_size = 25
-
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 
 # character to number
 alphabets = {"A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7,"H":8,"I":9,"J":10,"K":11,
@@ -88,7 +85,7 @@ test_y = torch.tensor(test_y, dtype=torch.float32).to(device)
 
 ##### TOGGLE 1) #####
 # Decide whether to create a model or to use a saved model from a file
-work_with_model_from_file = True 
+work_with_model_from_file = False
 
 if work_with_model_from_file:
     print("Loading model parameters from file")
@@ -106,7 +103,8 @@ if not work_with_model_from_file:
 
 ##### TOGGLE 2) #####
 # Choose whether to train at all
-do_train = False
+do_train = True
+
 ##### TOGGLE 3) #####
 # Choose whether to train model from scratch or whether to continue training with a model saved to a file
 train_with_model_from_file = False
@@ -128,6 +126,7 @@ if train_with_model_from_file:
 # Choose whether to save the complete trained model to a file and specify filename and path
 # PyTorch Tutorial 17 - Saving and Loading Models: https://www.youtube.com/watch?v=9L9jEOwRrCg 
 save_trained_model = False
+
 ##### TOGGLE 5) #####
 # Choose whether to save just the the parameters of the trained model to a file and specify filename and path
 # PyTorch Tutorial 17 - Saving and Loading Models: https://www.youtube.com/watch?v=9L9jEOwRrCg 

@@ -15,7 +15,6 @@ import argparse
 from read_data import read_labels
 from read_data import encode_image
 from encode import max_str
-from encode import min_str
 from encode import encode_labels
 from Model import CharModel
 from train import create_mini_batches
@@ -70,8 +69,6 @@ test_x_new = encode_image(user_path, "test", test_size, test_data, device)
 
 max_str_len = max_str(train_data, train_size)
 # Target sequence length of longest target in batch (padding length)
-min_str_len = min_str(train_data, train_size)
-# Minimum target length
 
 #%% Encode
 

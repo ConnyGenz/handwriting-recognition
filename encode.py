@@ -15,12 +15,6 @@ def max_str(train, train_size):
     return len(longest_name)
         
 
-def min_str(train, train_size):
-    liste1 = [train.loc[i,"IDENTITY"] for i in range(train_size)]
-    all_lists = liste1
-    longest_name = min(all_lists, key=len)
-    return len(longest_name)
-
 # convert one name (label) to an array of numbers as definded in the alphabets dictionary
 def label_to_num(label, alphabets):
     label = list(label)
@@ -28,7 +22,7 @@ def label_to_num(label, alphabets):
     return np.array(liste)
    
 
-# encode all ground-truth strings (reference) from input data and return tensor
+# encode all ground-truth strings (reference) from input data to return a tensor
 def encode_labels(size, data, max_str_len, alphabets, device):
     # placeholder for real labels
     label_placeholder = np.ones([size, max_str_len]) * 0      

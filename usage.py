@@ -135,7 +135,7 @@ if save_trained_model:
     torch.save(cm, save_under)
 
 if save_model_parameters:
-    storage_location = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/new_saved_model.pth"
+    storage_location = "/home/cornelia/snap/snapd-desktop-integration/current/Workplace/handwriting-recognition/new_saved_parameters.pth"
     print("Saving model parameters to file " + str(storage_location))
     torch.save(cm.state_dict(), storage_location)
 
